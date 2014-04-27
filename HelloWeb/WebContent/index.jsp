@@ -7,6 +7,7 @@
 <title>webtest</title>
 </head>
 <body>
-Hello Aman
+<% String name = "Aman";%>
+<h1>Hello <%=name%></h1>
 </body>
 </html>
