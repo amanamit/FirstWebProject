@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <project name="HelloWeb" basedir=".">
+    <!--<property file="build.properties"/>-->
+    <property name="src.dir" value="src" />
+    <property name="web.dir" value="WebContent" />
+    <property name="build.dir" value="${basedir}/build" />
+    <property name="name" value="HelloWeb" />
+ 	<property name="lib.dir" value="${web.dir}/WEB-INF/lib"/>
+
+    <path id="project-classpath">
+
+    	<!--  here give path for jar repository -->
+    	<fileset dir="${lib.dir}">
+    		<include name="servlet*.jar" />
+    	</fileset>
+    	<!--<fileset dir="${basedir}/locallib">
+    		<include name="*.jar" />
+    	</fileset>-->
+    	<pathelement path="${build.dir}" />
+    </path>
+
+    <target name="build" depends="compile" description="build project, but first compile it">
+         <war destfile="build/${name}.war"
+             webxml="${web.dir}/WEB-INF/web.xml">
+             <lib dir="${lib.dir}"/>
+             <classes dir="${build.dir}/classes" />
+            <fileset dir="${web.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </war>
+    </target>
+
+    <target name="compile" description="Compile java files and place them webContents/web-inf/ " depends="clean">
+    	<mkdir dir="${build.dir}/classes"/>
+        <javac destdir="${build.dir}/classes" failonerror="true">
+            <src path="${src.dir}"/>
+            <classpath refid="project-classpath"/>
+        </javac>
+    </target>
+
+    <target name="clean">
+	<echo>Cleaning-----</echo>
+    	 <delete dir="${build.dir}" failonerror="true"/>
+		 <echo>deleted-----</echo>
+    </target>
+</project>
